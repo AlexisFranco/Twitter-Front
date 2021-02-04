@@ -1,11 +1,9 @@
-import axios from 'axios';
+import http from './http';
 import * as Auth from '../utils/auth';
 
-const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
-
 export function login({ username = '', password = '' }) {
-  return axios
-    .post(`${BASE_API_URL}/users/login`, {
+  return http
+    .post('/users/login', {
       username,
       password,
     })
@@ -33,8 +31,8 @@ export function signup({
   password = '',
   passwordConfirmation = '',
 }) {
-  return axios
-    .post(`${BASE_API_URL}/users`, {
+  return http
+    .post('/users', {
       name,
       username,
       email,

@@ -1,8 +1,6 @@
-import axios from 'axios';
+import http from './http';
 import { formatDistance } from 'date-fns';
 import * as Auth from '../utils/auth';
-
-const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 
 function transformTweet(item) {
   const { _id, createdAt = '' } = item;
@@ -19,7 +17,7 @@ function transformTweets(items) {
 }
 
 export function getTweets() {
-  return axios.get(`${BASE_API_URL}/tweets`).then((response) => {
+  return http.get('/tweets').then((response) => {
     const { data = {} } = response;
 
     const { success, items = [] } = data;
@@ -37,7 +35,7 @@ export function getTweets() {
 }
 
 export function getTweet({ id }) {
-  return axios.get(`${BASE_API_URL}/tweets/${id}`).then((response) => {
+  return http.get(`/tweets/${id}`).then((response) => {
     const { data = {} } = response;
 
     const { success, items: [item = {}] = [] } = data;
@@ -55,9 +53,9 @@ export function getTweet({ id }) {
 export function newTweet({ content = '' }) {
   const token = Auth.getToken();
 
-  return axios
+  return http
     .post(
-      `${BASE_API_URL}/tweets`,
+      '/tweets',
       {
         content,
       },
